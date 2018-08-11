@@ -6,6 +6,7 @@ import static org.junit.Assert.assertThat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
@@ -44,6 +45,7 @@ public class FilterMapByKeys {
 		MONTHS.put(new Integer(10), "October");
 		MONTHS.put(new Integer(11), "November");
 		MONTHS.put(new Integer(12), "December");
+		MONTHS.put(null, "12345");
 	}
 	
 	@Test
@@ -66,16 +68,23 @@ public class FilterMapByKeys {
 	@Test
 	public void filter_map_by_keys_java8_lambda () {
 	
-		Map<Integer, String> firstQuarter = 
-				MONTHS.entrySet()
-				.stream()
-				.filter(p -> p.getKey().intValue() <= 4)
-				.collect(Collectors.toMap(p -> p.getKey(), p -> p.getValue()));
+//		Map<Integer, String> firstQuarter =
+//				MONTHS.entrySet()
+//				.stream()
+//				.filter(p -> p.getKey().intValue() <= 4)
+//				.collect(Collectors.toMap(p -> p.getKey(), p -> p.getValue()));
+
+		Optional<Map<Integer,String>> maps = Optional.ofNullable(MONTHS);
+
+//		System.out.println(maps.flatMap(p->p.get()).get());
+
+
+
 		
-		logger.info(firstQuarter);
-		
-	    assertThat(firstQuarter.keySet(), contains(
-	    		1, 2, 3, 4));
+//		logger.info(firstQuarter);
+//
+//	    assertThat(firstQuarter.keySet(), contains(
+//	    		1, 2, 3, 4));
 	}
 	
 	@Test

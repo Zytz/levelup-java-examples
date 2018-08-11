@@ -53,11 +53,12 @@ public class FindFirstNonNull {
 				null,
 				"World");
 
-		Optional<String> firstNonNull = strings
-				.stream()
-				.filter(p -> p != null)
-//				.filter(Objects::nonNull)
-				.findFirst();
+//		Optional<String> firstNonNull = strings
+//				.stream()
+//				.filter(p -> p != null)
+////				.filter(Objects::nonNull)
+//				.findFirst();
+		Optional<String> firstNonNull = strings.parallelStream().filter(p->p != null).findFirst();
 		
 		assertEquals("Hello", firstNonNull.get());
 	}
@@ -65,16 +66,25 @@ public class FindFirstNonNull {
 	
 	@Test
 	public void find_first_non_null_list_guava () {
-
 		List<String> strings = Lists.newArrayList(
-				null, 
+				null,
 				"Hello",
 				null,
 				"World");
+
+
+
+
+//		System.out.println(strings.parallelStream().findAny());
+
+		Optional<List<String>> strings1 = Optional.ofNullable(strings);
+
+		System.out.println(strings1.get());
+
+//		strings.isPresent();
+//		String firstNonNull = Iterables.find(strings, Predicates.notNull());
 		
-		String firstNonNull = Iterables.find(strings, Predicates.notNull());
-		
-		assertEquals("Hello", firstNonNull);
+//		assertEquals("Hello", firstNonNull);
 	}
 	
 	@Test
